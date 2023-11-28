@@ -1,7 +1,6 @@
 # 212 Project- Sorting Algorithms
 Term Project
-Christine Adeyefa, Jason Li, 
-// add your name
+Christine Adeyefa, Michael Baitch, Jason Li, Joseph Quijioc
 
 ## Project Description
 
