@@ -2,8 +2,8 @@
 #include <vector>
 #include <fstream>
 
-void quicksort(std::vector<int>& arr, int low, int high);
-int partition(std::vector<int>& arr, int low, int high);
+void quicksort(std::vector<float>& arr, int low, int high, int& comparisons);
+int partition(std::vector<float>& arr, int low, int high, int& comparisons);
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     }
 
     std::string filename = argv[1];
-    std::vector<int> arr;
+    std::vector<float> arr;
     std::ifstream file(filename);
 
     if (!file) {
@@ -20,37 +20,41 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    int value;
+    float value;
     while (file >> value) {
         arr.push_back(value);
     }
     file.close();
 
-    quicksort(arr, 0, arr.size() - 1);
+    int comparisons = 0;  // Variable to store the number of comparisons
+    quicksort(arr, 0, arr.size() - 1, comparisons);
 
     std::cout << "Sorted array: ";
-    for (int i : arr) {
+    for (float i : arr) {
         std::cout << i << " ";
     }
     std::cout << std::endl;
 
+    std::cout << "Number of comparisons: " << comparisons << std::endl;
+
     return 0;
 }
 
-void quicksort(std::vector<int>& arr, int low, int high) {
+void quicksort(std::vector<float>& arr, int low, int high, int& comparisons) {
     if (low < high) {
-        int pi = partition(arr, low, high);
+        int pi = partition(arr, low, high, comparisons);
 
-        quicksort(arr, low, pi - 1);
-        quicksort(arr, pi + 1, high);
+        quicksort(arr, low, pi - 1, comparisons);
+        quicksort(arr, pi + 1, high, comparisons);
     }
 }
 
-int partition(std::vector<int>& arr, int low, int high) {
-    int pivot = arr[high];
+int partition(std::vector<float>& arr, int low, int high, int& comparisons) {
+    float pivot = arr[high];
     int i = (low - 1);
 
     for (int j = low; j <= high - 1; j++) {
+        comparisons++;  // Increment comparisons for each comparison made
         if (arr[j] < pivot) {
             i++;
             std::swap(arr[i], arr[j]);
