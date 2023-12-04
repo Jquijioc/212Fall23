@@ -10,6 +10,9 @@ private:
 public:
     int menu();
 
+    //insertion
+    void insertionSort(std::vector<float>& arr, int& comparisons);
+
     //merge
     void merge(std::vector<float> &arr, int start, int middle, int end);
     void mergeSort(std::vector<float> &arr,int start, int end);
