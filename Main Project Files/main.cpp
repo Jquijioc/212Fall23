@@ -27,31 +27,32 @@ int main(int argc, char *argv[]) {
 
     //menu to a sort
     int picked = sort.menu();
-    int comparisons= 0;
+    int comparisons = 0;
 
     std::chrono::steady_clock::time_point start_time;
 
     if(picked == 1){
-        auto start_time = std::chrono::high_resolution_clock::now();
+        start_time = std::chrono::high_resolution_clock::now();
         sort.bubbleSort(arr, comparisons);
     } 
     else if (picked == 2){
-        auto start_time = std::chrono::high_resolution_clock::now();
-        sort.quickSort(arr,0, arr.size()-1,comparisons);
+        start_time = std::chrono::high_resolution_clock::now();
+        sort.quickSort(arr, 0, arr.size() - 1, comparisons);
     } 
     else if (picked == 3){
-        auto start_time = std::chrono::high_resolution_clock::now();
-        sort.mergeSort(arr, 0, static_cast<int>(arr.size()-1),comparisons);
+        start_time = std::chrono::high_resolution_clock::now();
+        sort.mergeSort(arr, 0, static_cast<int>(arr.size() - 1), comparisons);
     }
     else if (picked == 4) {
-        auto start_time = std::chrono::high_resolution_clock::now();
-        sort.insertionSort(arr,comparisons);
+        start_time = std::chrono::high_resolution_clock::now();
+        sort.insertionSort(arr, comparisons);
     }
 
     auto end_time = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
-    std::cout << "Number of comparisons: " << comparisons <<std::endl;
-    std::cout << "Time taken by the sorting algorithm: " << duration.count() << " seconds" << std::endl;
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
+
+    std::cout << "Number of comparisons: " << comparisons << std::endl;
+    std::cout << "Time taken by the sorting algorithm: " << (double)(duration.count() / 1000.0) << " microseconds" << std::endl;
 
     std::ofstream outputFile("sorted.txt");
     if (!outputFile) {
@@ -68,5 +69,4 @@ int main(int argc, char *argv[]) {
     std::cout << "Sorted array has been written to sorted.txt." << std::endl;
 
     return 0;
-    
 }
