@@ -2,21 +2,18 @@
 #include <vector>
 #include <fstream>
 
-void bubbleSort(std::vector<int>& arr) {
+void bubbleSort(std::vector<float>& arr, int& comparisons) {
     int n = arr.size();
+    comparisons = 0;  
+
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
+            comparisons++;  
             if (arr[j] > arr[j + 1]) {
                 std::swap(arr[j], arr[j + 1]);
             }
         }
     }
-}
-
-void swap(int& a, int& b) {
-    int temp = a;
-    a = b;
-    b = temp;
 }
 
 int main(int argc, char *argv[]) {
@@ -26,7 +23,7 @@ int main(int argc, char *argv[]) {
     }
 
     std::string filename = argv[1];
-    std::vector<int> arr;
+    std::vector<float> arr;
     std::ifstream file(filename);
 
     if (!file) {
@@ -34,13 +31,14 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    int value;
+    float value;
     while (file >> value) {
         arr.push_back(value);
     }
     file.close();
 
-    bubbleSort(arr);
+    int comparisons;  
+    bubbleSort(arr, comparisons);
 
     std::ofstream output_file("sorted_array.txt");
     if (!output_file) {
@@ -54,6 +52,7 @@ int main(int argc, char *argv[]) {
     output_file.close();
 
     std::cout << "Sorted array has been written to sorted_array.txt." << std::endl;
+    std::cout << "Number of comparisons: " << comparisons << std::endl;
 
     return 0;
 }
