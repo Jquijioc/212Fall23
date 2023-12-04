@@ -78,6 +78,32 @@ void Sort::bubbleSort(std::vector<float>& arr, int& comparisons) {
     }
 }
 
+// insertion sort
+void Sort::insertionSort(std::vector<float>& arr, int& comparisons) {
+    // get arr length
+    int n = arr.size();
+    
+    // loop through arr to compare each element
+    for (int i = 1; i < n; i++) {
+        float curr = arr[i];
+        int j = i - 1;
+
+        // count the number of comparisons
+        comparisons++;
+
+       // move element greater than curr ahead
+        while (j >= 0 && arr[j] > curr) {
+            // count the number of comparisons
+            comparisons++;
+            // move curr to the right
+            arr[j + 1] = arr[j];
+            // move to next element
+            j = j - 1;
+        }
+        // move curr to the right position
+        arr[j + 1] = curr;
+    }
+}
 
 //quicksort
 
