@@ -63,7 +63,6 @@ int main(int argc, char *argv[]) {
 
     for (int i = 0; i < arr.size(); i++) {
         outputFile << arr[i] << std::endl;
-        std::cout << arr[i];
     }
     
     std::cout << "Sorted array has been written to sorted.txt." << std::endl;
