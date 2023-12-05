@@ -2,7 +2,7 @@
 Term Project
 Christine Adeyefa, Michael Baitch, Jason Li, Joseph Quijioc
 
-## Project Description
+## Program Description
 
 
 
