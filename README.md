@@ -33,9 +33,10 @@ While this made for more setup, it allowed for faster implementation on the user
 The program's command line execution follow the form of:
 
 ```
-g++ sort.cpp main.cpp -o test && ./test
+g++ sort.cpp main.cpp -o test && ./test testingfile.txt
 
 ```
+With testingfile.txt being the data file to be used.
 
 Following this, the user will be prompted with inputting a number corresponding to a sorting algorithm
 
