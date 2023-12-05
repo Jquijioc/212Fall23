@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 
     // print the sorted list
     std::cout << "Sorted array: ";
-    for (size_t i = 0; i < arr.size(); i++) {
+    for (int i = 0; i < arr.size(); i++) {
         std::cout << arr[i] << " ";
     }
     // print comparisons
