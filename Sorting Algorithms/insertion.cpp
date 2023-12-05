@@ -2,7 +2,6 @@
 #include <vector>
 #include <fstream>
 
-// insertion sort
 void insertionSort(std::vector<float>& arr, int& comparisons) {
     // get arr length
     int n = arr.size();
