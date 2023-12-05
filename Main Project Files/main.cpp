@@ -1,76 +1,72 @@
-#include "adjacency_matrix.h"
-#include "adjacency_list.h"
 #include <iostream>
+#include <vector>
+#include <string>
 #include <fstream>
-#include <sstream>
+#include "sort.h"
+#include <chrono> 
+#include <iomanip> 
 
+int main(int argc, char *argv[]) {
 
-void adjacency_matrix(std::string ifname);
-void adjacency_list(int mode, std::string ifname);
+    Sort sort;
 
-// Mode
-// 0: Adjacency Matrix
-// 1: Adjacency List
-int main(int argc, char* argv[]){
-    int mode = std::stoi(argv[2]);
+    std::string filename = argv[1];
+    std::vector<float> arr;
+    std::ifstream file(filename);
 
-    if(mode == 0){
-        adjacency_matrix(argv[1]);
-    }else{
-        adjacency_list(mode, argv[1]);
-    }
-}
-
-void adjacency_matrix(std::string ifname){
-    AdjMatrix mat;
-    std::ifstream ifs(ifname);
-    std::string ofname = ifname.substr(0, ifname.rfind('.')) + "_output_0.dot";
-
-    std::string line;
-
-    int source;
-    int dest;
-    int weight;
-
-    while(std::getline(ifs, line)){
-        std::stringstream ss(line);
-        ss >> source >> dest >> weight;
-        mat.addEdge(source, dest, weight);
+    if (!file) {
+        std::cerr << "Unable to open file " << filename << std::endl;
+        return 1;
     }
 
-    mat.printGraph();
-    mat.outputGraph(ofname);
-}
+    float value;
+    while (file >> value) {
+        arr.push_back(value);
+    }
+    file.close();
 
-void adjacency_list(int mode, std::string ifname){
-    AdjList lst;
-    std::ifstream ifs(ifname);
-    std::string ofname = ifname.substr(0, ifname.rfind('.')) + "_output_" + std::to_string(mode) + ".dot";
-    std::string line;
+    //menu to a sort
+    int picked = sort.menu();
+    int comparisons = 0;
 
-    std::cout << ifname << std::endl;
-    std::cout << ofname << std::endl;
+    std::chrono::high_resolution_clock::time_point start_time;
 
-    int source;
-    int dest;
-    int weight;
-
-    while(std::getline(ifs, line)){
-        std::stringstream ss(line);
-        ss >> source >> dest >> weight;
-        lst.addEdge(source, dest, weight);
-
+    if(picked == 1){
+        start_time = std::chrono::high_resolution_clock::now();
+        sort.bubbleSort(arr, comparisons);
+    } 
+    else if (picked == 2){
+        start_time = std::chrono::high_resolution_clock::now();
+        sort.quickSort(arr, 0, arr.size() - 1, comparisons);
+    } 
+    else if (picked == 3){
+        start_time = std::chrono::high_resolution_clock::now();
+        sort.mergeSort(arr, 0, static_cast<int>(arr.size() - 1), comparisons);
+    }
+    else if (picked == 4) {
+        start_time = std::chrono::high_resolution_clock::now();
+        sort.insertionSort(arr, comparisons);
     }
 
-    lst.printGraph();
-    if(mode == 1){
-        lst.problem1(ofname);
-    }else if(mode == 2){
-        lst.problem2(ofname);
-    }else if(mode == 3){
-        lst.problem3(ofname);
-    }else{
-        lst.problem4(ofname);
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
+
+    std::cout << "Number of comparisons: " << comparisons << std::endl;
+    std::cout << "Time taken by the sorting algorithm: " << (double)(duration.count() / 1000.0) << " microseconds" << std::endl;
+
+    std::ofstream outputFile("sorted.txt");
+    if (!outputFile) {
+        std::cerr << "Unable to create output file." << std::endl;
+        return 1;
     }
 
+    outputFile << std::fixed << std::setprecision(2);
+
+    for (int i = 0; i < arr.size(); i++) {
+        outputFile << arr[i] << std::endl;
+    }
+    
+    std::cout << "Sorted array has been written to sorted.txt." << std::endl;
+
+    return 0;
 }
